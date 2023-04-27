@@ -1,0 +1,5 @@
+#define ON_CODE "1234"
+#define OFF_CODE "####"
+#define TRANS_PIN 13
+#define CURRENT_SENSOR A11
+#define ABSCHALTDAUER_MIN 30
