@@ -1,6 +1,6 @@
 #include <Keypad.h>
 
-#include <MFC-PV.h>
+#include <config.h>
 
 const byte ROWS = 4;
 const byte COLS = 3;
