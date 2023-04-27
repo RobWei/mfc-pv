@@ -1,6 +1,6 @@
 #include <Keypad.h>
 
-#include <config.h>
+#include "config.h"
 
 const byte ROWS = 4;
 const byte COLS = 3;
@@ -59,7 +59,33 @@ void loop() {
     unlockMillis = 0;
   }
   //Strom-Sensor
+  // 5V = 1023
+  // 1V = 204,6
+  //+300A = 90% of 5V = 4,5 V = 920,7 = 818,4
+  //   0A = 50% of 5V = 2,5 V = 511,5 = 409,2
+  //-300A = 10% of 5V = 0,5 V = 102,3 =   0,0
+  // +-1A =                           = 1,364
   {
+    
     //CURRENT_SENSOR
+    //Average Analog-Value 1000er mean
+    unsigned long sum;
+    for (byte  i = 0; i < 1000; i++)
+    {
+      sum += analogRead(CURRENT_SENSOR);
+    }
+    sum = sum / 1000;
+    //DEBUG I HOPE THIS WILL WORK
+    Serial.print("CURRENT_SENSOR 1000er average: ");
+    Serial.println(sum);
+    Serial.print("CURRENT_SENSOR in Volts average: ");
+    Serial.println(sum/204.6);
+    Serial.print("CURRENT_SENSOR in AMPs average: ");
+    unsigned long amps = ((sum-102.3)*1.364)-300;
+    Serial.println(amps);
+    if(amps >= 5 || amps <= -5)
+    {
+      Serial.println("Amps größer als 5 oder kleiner als -5");
+    }
   }
 }
