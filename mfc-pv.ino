@@ -17,9 +17,11 @@ Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
 void setup() {
   Serial.begin(9600);
-  delay(2000);
+  delay(5000);
   Serial.println("PV-ANLAGE MFC-OTTIBOTTI");
   pinMode(TRANS_PIN, OUTPUT);
+  pinMode(CURRENT_SENSOR, INPUT_PULLUP);
+
 }
 
 String last_digits = "";
@@ -66,7 +68,7 @@ void loop() {
   //-300A = 10% of 5V = 0,5 V = 102,3 =   0,0
   // +-1A =                           = 1,364
   {
-    
+
     //CURRENT_SENSOR
     //Average Analog-Value 1000er mean
     unsigned long sum;
@@ -79,11 +81,11 @@ void loop() {
     Serial.print("CURRENT_SENSOR 1000er average: ");
     Serial.println(sum);
     Serial.print("CURRENT_SENSOR in Volts average: ");
-    Serial.println(sum/204.6);
+    Serial.println(sum / 204.6);
     Serial.print("CURRENT_SENSOR in AMPs average: ");
-    unsigned long amps = ((sum-102.3)*1.364)-300;
+    unsigned long amps = ((sum - 102.3) * 1.364) - 300;
     Serial.println(amps);
-    if(amps >= 5 || amps <= -5)
+    if (amps >= 5 || amps <= -5)
     {
       Serial.println("Amps größer als 5 oder kleiner als -5");
     }
